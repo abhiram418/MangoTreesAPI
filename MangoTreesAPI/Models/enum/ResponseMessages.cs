@@ -13,6 +13,7 @@
         {
             public static string SuccessProperty1 = "User Registered";
             public static string SuccessProperty2 = "OTP Registered";
+            public static string SuccessProperty3 = "Username Available";
             public static string FailureProperty1 = "The person trying to register or create an account on the MangoTrees already exists as a customer in the system";
             public static string FailureProperty2 = "OTP Expired";
         }

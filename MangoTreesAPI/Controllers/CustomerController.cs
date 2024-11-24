@@ -1,11 +1,13 @@
 ﻿using MangoTreesAPI.Models;
 using MangoTreesAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MangoTreesAPI.Controllers
 {
     [ApiController]
     [Route("Customer")]
+    [Authorize(Roles = "customer,management,admin")]
     public class CustomerController: ControllerBase
     {
         private readonly ProductService productService;

@@ -7,7 +7,7 @@ using static System.Net.WebRequestMethods;
 namespace MangoTreesAPI.Controllers
 {
     [ApiController]
-    [Route("authentication")]
+    [Route("Authentication")]
     public class AuthenticationController: ControllerBase
     {
         private readonly AuthService authService;
@@ -20,6 +20,31 @@ namespace MangoTreesAPI.Controllers
             authService = _authService;
             customerService = _customerService;
             httpContext = _httpContext;
+        }
+
+        [HttpGet("UserName")]
+        public async Task<ActionResult> UserNameAvailabilityCheck(string userName)
+        {
+            if (string.IsNullOrEmpty(userName))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var UserName = await authService.GetUserAuthenticationDataAsync(userName);
+                if (UserName == null) {
+                    return Ok(new { Message = SignupResponse.SuccessProperty3 });
+                }
+                else
+                {
+                    return Ok(new { Message = SignupResponse.FailureProperty1 });
+                }
+            }
+            catch (Exception)
+            {
+                return NotFound(new { Message = ResponseMessages.Response.ResourceNotFound });
+            }
         }
 
         [HttpPost("Login")]
@@ -42,7 +67,7 @@ namespace MangoTreesAPI.Controllers
                 if (user.IsActive)
                 {
                     var tokenString = await authService.GenerateTokenAsync(user.UserName, user.UserId!, role.RoleName!);
-                    await authService.UpdateLastLogin(user);
+                    await authService.UpdateLastLoginAsync(user);
                     return Ok(new { Token = tokenString });
                 }
                 else
@@ -64,6 +89,7 @@ namespace MangoTreesAPI.Controllers
             {
                 return BadRequest(new { Message = ResponseMessages.Response.Failure.ToString() });
             }
+
             try
             {
                 var userData = await authService.GetUserAuthenticationDataByPhoneNumberAsync(phoneNumber);
@@ -90,6 +116,7 @@ namespace MangoTreesAPI.Controllers
             {
                 return BadRequest();
             }
+
             try
             {
                 var user = await customerService.AddUserDataAsync(userData, otp);

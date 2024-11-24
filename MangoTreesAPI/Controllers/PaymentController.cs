@@ -1,11 +1,13 @@
 ﻿using MangoTreesAPI.Models;
 using MangoTreesAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MangoTreesAPI.Controllers
 {
     [ApiController]
     [Route("Payment")]
+    [Authorize(Roles = "management,admin")]
     public class PaymentController: ControllerBase
     {
         private readonly PaymentService paymentService;

@@ -187,7 +187,7 @@ namespace MangoTreesAPI.Services
             var user = mapper.Map<UserAuthenticationModel>(userData);
             return user;
         }
-        public async Task UpdateLastLogin(UserAuthenticationModel userData)
+        public async Task UpdateLastLoginAsync(UserAuthenticationModel userData)
         {
             userData.LastLogin = DateTime.UtcNow;
             var user = mapper.Map<UserAuthenticationCollection>(userData);

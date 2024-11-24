@@ -1,5 +1,6 @@
 ﻿using MangoTreesAPI.Models;
 using MangoTreesAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static MangoTreesAPI.Models.ResponseMessages;
 
@@ -32,6 +33,7 @@ namespace MangoTreesAPI.Controllers
         }
 
         [HttpPost("Review")]
+        [Authorize(Roles = "customer,management,admin")]
         public async Task<ActionResult> PostReviewData([FromBody] ProductReviewsModel reviewData, string productId)
         {
             if (!ModelState.IsValid)
@@ -123,6 +125,7 @@ namespace MangoTreesAPI.Controllers
         }
 
         [HttpGet("PromotionCode")]
+        [Authorize(Roles = "customer,management,admin")]
         public async Task<IActionResult> ValidatePromotionCode(string promotionCode, decimal amount)
         {
             if (string.IsNullOrEmpty(promotionCode) || amount<0)

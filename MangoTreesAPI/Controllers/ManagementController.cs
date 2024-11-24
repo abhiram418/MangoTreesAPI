@@ -7,20 +7,19 @@ using static MangoTreesAPI.Models.ResponseMessages;
 namespace MangoTreesAPI.Controllers
 {
     [ApiController]
+    [Route("Management")]
     public class ManagementController: ControllerBase
     {
         private readonly AuthService authService;
-        private readonly CustomerService customerService;
         private readonly ProductService productService;
-        public ManagementController(ProductService _productService, CustomerService _customerService, AuthService _authService)
+        public ManagementController(ProductService _productService, AuthService _authService)
         {
             authService = _authService;
-            customerService = _customerService;
             productService = _productService;
         }
 
         [HttpPost("Product")]
-        [Authorize(Roles = "management")]
+        [Authorize(Roles = "management,admin")]
         public async Task<ActionResult> PostProductData(ProductRequestModel productData)
         {
             if (!ModelState.IsValid)
@@ -54,7 +53,7 @@ namespace MangoTreesAPI.Controllers
         }
 
         [HttpPost("PromotionCode")]
-        //[Authorize(Roles = "management")]
+        [Authorize(Roles = "management,admin")]
         public async Task<ActionResult> PostPromotionCode(PromotionModel promotionData)
         {
             try
