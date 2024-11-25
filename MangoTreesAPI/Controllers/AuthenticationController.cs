@@ -83,7 +83,7 @@ namespace MangoTreesAPI.Controllers
         }
 
         [HttpPost("Request/OTP")]
-        public async Task<ActionResult<string>> RequestRegisterUser(string phoneNumber)
+        public async Task<ActionResult> RequestRegisterUser(string phoneNumber)
         {
             if (string.IsNullOrEmpty(phoneNumber) || phoneNumber.Length != 10 || !ModelState.IsValid)
             {
@@ -99,8 +99,8 @@ namespace MangoTreesAPI.Controllers
                 }
                 else
                 {
-                    await otpService.GenerateSignupOTP(phoneNumber);
-                    return Ok(new { Message = SignupResponse.SuccessProperty2 });
+                    var OTP = await otpService.GenerateSignupOTP(phoneNumber);
+                    return Ok(new { OTP = OTP });
                 }
             }
             catch (Exception)
@@ -130,7 +130,7 @@ namespace MangoTreesAPI.Controllers
         }
 
         [HttpPost("Password/Request/OTP")]
-        public async Task<ActionResult<string>> RequestUpdateCustomerPassword(string phoneNumber)
+        public async Task<ActionResult> RequestUpdateCustomerPassword(string phoneNumber)
         {
             if (string.IsNullOrEmpty(phoneNumber) || phoneNumber.Length != 10 || !ModelState.IsValid)
             {
@@ -141,8 +141,8 @@ namespace MangoTreesAPI.Controllers
                 var userData = await authService.GetUserAuthenticationDataByPhoneNumberAsync(phoneNumber);
                 if (userData != null)
                 {
-                    await otpService.GenerateSignupOTP(phoneNumber);
-                    return Ok(new { Message = SignupResponse.SuccessProperty2 });
+                    var OTP = await otpService.GenerateSignupOTP(phoneNumber);
+                    return Ok(new { OTP = OTP });
                 }
                 else
                 {
