@@ -96,7 +96,7 @@ namespace MangoTreesAPI.Controllers
                 var userData = await authService.GetUserAuthenticationDataByPhoneNumberAsync(phoneNumber);
                 if (userData != null)
                 {
-                    return BadRequest(new { Message = SignupResponse.FailureProperty1 });
+                    return Conflict(new { Message = SignupResponse.FailureProperty1 });
                 }
                 else
                 {
@@ -123,7 +123,7 @@ namespace MangoTreesAPI.Controllers
                 var UserName = await authService.GetUserAuthenticationDataAsync(userData.UserName);
                 if (UserName != null)
                 {
-                    return BadRequest(new { Message = SignupResponse.FailureProperty1 });
+                    return Conflict(new { Message = SignupResponse.FailureProperty1 });
                 }
                 else
                 {
@@ -155,7 +155,7 @@ namespace MangoTreesAPI.Controllers
                 }
                 else
                 {
-                    return NotFound(new { Message = ResponseMessages.Response.ResourceNotFound });
+                    return Conflict(new { Message = ResponseMessages.Response.ResourceNotFound });
                 }
             }
             catch (Exception)
