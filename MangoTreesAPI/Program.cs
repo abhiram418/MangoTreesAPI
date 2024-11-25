@@ -10,10 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Developer add-ons
-// Detailed return when problem comes
-builder.Services.AddProblemDetails();
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddAutoMapper(typeof(Program));
+DeveloperMiddleware.ConfigureDeveloperTools(builder.Services);
 
 // Configure Custom Services logic
 ServiceMiddleware.ConfigureCustomServices(builder.Services);
@@ -29,6 +26,8 @@ AWSMiddleware.ConfigureAWS(builder.Services, builder.Configuration);
 
 
 var app = builder.Build();
+
+app.UseCors("AllowMangoTreesUI");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
