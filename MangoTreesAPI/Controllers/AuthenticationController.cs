@@ -3,6 +3,7 @@ using MangoTreesAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using static MangoTreesAPI.Models.ResponseMessages;
 using static System.Net.WebRequestMethods;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MangoTreesAPI.Controllers
 {
@@ -38,7 +39,7 @@ namespace MangoTreesAPI.Controllers
                 }
                 else
                 {
-                    return Ok(new { Message = SignupResponse.FailureProperty1 });
+                    return BadRequest(new { Message = SignupResponse.FailureProperty1 });
                 }
             }
             catch (Exception)
@@ -119,9 +120,17 @@ namespace MangoTreesAPI.Controllers
 
             try
             {
-                var user = await customerService.AddUserDataAsync(userData, otp);
-                await authService.DeleteUserOTPAsync(userData.PhoneNumber);
-                return Ok(new { Message = SignupResponse.SuccessProperty1 });
+                var UserName = await authService.GetUserAuthenticationDataAsync(userData.UserName);
+                if (UserName != null)
+                {
+                    return BadRequest(new { Message = SignupResponse.FailureProperty1 });
+                }
+                else
+                {
+                    var user = await customerService.AddUserDataAsync(userData, otp);
+                    await authService.DeleteUserOTPAsync(userData.PhoneNumber);
+                    return Ok(new { Message = SignupResponse.SuccessProperty1 });
+                }
             }
             catch (Exception)
             {
