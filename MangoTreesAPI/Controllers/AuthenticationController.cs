@@ -129,7 +129,14 @@ namespace MangoTreesAPI.Controllers
                 {
                     var message = await customerService.AddUserDataAsync(userData, otp);
                     await authService.DeleteUserOTPAsync(userData.PhoneNumber);
-                    return Ok(new { Message = message });
+                    if(message == SignupResponse.SuccessProperty1)
+                    {
+                        return Ok(new { Message = message });
+                    }
+                    else
+                    {
+                        return StatusCode(410, new { Message = message });
+                    }
                 }
             }
             catch (Exception)
