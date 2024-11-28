@@ -76,7 +76,8 @@ namespace MangoTreesAPI.Controllers
             {
                 var productData = await productService.GetProductDataAsync(productId);
                 var productInfoData = await productService.GetProductInfoDataAsync(productData.ProductInfo);
-                return Ok(new { ProductData = productData, ProductInfo = productInfoData});
+                var productReviewData = await productService.GetProductReviewsAsync(productData.ProductReviews.ToArray());
+                return Ok(new { ProductData = productData, ProductInfo = productInfoData, ProductReviewData = productReviewData });
             }
             catch (Exception)
             {
