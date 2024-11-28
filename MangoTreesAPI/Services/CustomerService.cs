@@ -180,9 +180,17 @@ namespace MangoTreesAPI.Services
             updatedAddress.AddressId = addressId;
             await context.SaveAsync(updatedAddress);
         }
-        public async Task DeleteAddressAsync(string addressId)
+        public async Task DeleteAddressAsync(string addressId, string userId)
         {
-            await context.DeleteAsync<AddressCollection>(addressId);
+            var userData = await GetUserDataAsync(userId);
+            if(userData.AddressList.Count > 1)
+            {
+                await context.DeleteAsync<AddressCollection>(addressId);
+            }
+            else
+            {
+                throw new Exception("You must have at least one address saved. Please add a new address before deleting the current one");
+            }
         }
 
 

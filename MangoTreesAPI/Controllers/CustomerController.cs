@@ -157,9 +157,11 @@ namespace MangoTreesAPI.Controllers
         [HttpDelete("Address")]
         public async Task<ActionResult> DeleteUserAddressData(string addressId)
         {
+            var userId = httpContext.HttpContext?.User.FindFirst("userId")?.Value ?? throw new UnauthorizedAccessException("User ID not found in token");
+
             try
             {
-                await customerService.DeleteAddressAsync(addressId);
+                await customerService.DeleteAddressAsync(addressId, userId);
                 return Ok(new { Message = ResponseMessages.Response.Success.ToString() });
             }
             catch (Exception)
