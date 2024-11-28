@@ -180,6 +180,11 @@ namespace MangoTreesAPI.Services
             updatedAddress.AddressId = addressId;
             await context.SaveAsync(updatedAddress);
         }
+        public async Task DeleteAddressAsync(string addressId)
+        {
+            await context.DeleteAsync<AddressCollection>(addressId);
+        }
+
 
         public async Task<string> PostOrderAsync(OrderRequestModel orderRequestData, string userId)
         {

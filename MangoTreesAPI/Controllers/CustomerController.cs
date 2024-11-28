@@ -154,6 +154,20 @@ namespace MangoTreesAPI.Controllers
             }
         }
 
+        [HttpDelete("Address")]
+        public async Task<ActionResult> DeleteUserAddressData(string addressId)
+        {
+            try
+            {
+                await customerService.DeleteAddressAsync(addressId);
+                return Ok(new { Message = ResponseMessages.Response.Success.ToString() });
+            }
+            catch (Exception)
+            {
+                return NotFound(new { Message = ResponseMessages.Response.ResourceNotFound });
+            }
+        }
+
         [HttpGet("Orders")]
         public async Task<ActionResult<OrderModel[]>> GetUserOrdersData()
         {
