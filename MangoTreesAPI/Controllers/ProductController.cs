@@ -66,17 +66,17 @@ namespace MangoTreesAPI.Controllers
         }
 
         [HttpGet("ProductInfo")]
-        public async Task<ActionResult> GetProductInfoData(string productInfoId, string productId)
+        public async Task<ActionResult> GetProductInfoData(string productId)
         {
-            if (string.IsNullOrEmpty(productId) || string.IsNullOrEmpty(productInfoId))
+            if (string.IsNullOrEmpty(productId))
             {
                 return BadRequest();
             }
             try
             {
-                var productInfoData = await productService.GetProductInfoDataAsync(productInfoId);
-                var nutritionFactsData = await productService.GetNutritionFactsAsync(productId);
-                return Ok(new {ProductInfo = productInfoData, NutritionFacts =  nutritionFactsData});
+                var productData = await productService.GetProductDataAsync(productId);
+                var productInfoData = await productService.GetProductInfoDataAsync(productData.ProductInfo);
+                return Ok(new { ProductData = productData, ProductInfo = productInfoData});
             }
             catch (Exception)
             {

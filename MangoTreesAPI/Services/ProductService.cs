@@ -60,7 +60,7 @@ namespace MangoTreesAPI.Services
             return productInfo;
         }
 
-        public async Task<string[]> GetNutritionFactsAsync(string productId)
+        private async Task<string[]> GetNutritionFactsAsync(string productId)
         {
             var productData = await GetProductDataAsync(productId);
             return [.. productData.NutritionFacts];
