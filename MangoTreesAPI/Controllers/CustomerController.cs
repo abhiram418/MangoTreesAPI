@@ -13,9 +13,11 @@ namespace MangoTreesAPI.Controllers
         private readonly ProductService productService;
         private readonly AuthService authService;
         private readonly CustomerService customerService;
+        private readonly ManagementService managementService;
         private readonly IHttpContextAccessor httpContext;
-        public CustomerController(ProductService _productService, CustomerService _customerService, AuthService _authService, OtpService _otpService, IHttpContextAccessor _httpContext)
+        public CustomerController(ManagementService _managementService , ProductService _productService, CustomerService _customerService, AuthService _authService, OtpService _otpService, IHttpContextAccessor _httpContext)
         {
+            managementService = _managementService;
             productService = _productService;
             authService = _authService;
             customerService = _customerService;
@@ -217,8 +219,15 @@ namespace MangoTreesAPI.Controllers
 
             try
             {
-                var Transaction = await productService.GetReceiptDataAsync(orderId);
-                return Ok(Transaction);
+                var Transaction = await managementService.GetTransactionDataAsync(orderId);
+                if(Transaction != null)
+                {
+                    return Ok(Transaction);
+                }
+                else
+                {
+                    return NoContent();
+                }
             }
             catch (Exception)
             {

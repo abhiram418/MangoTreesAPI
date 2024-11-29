@@ -174,13 +174,6 @@ namespace MangoTreesAPI.Services
             var promotion = mapper.Map<PromotionCollection>(promotionData);
             await context.SaveAsync(promotion);
         }
-
-        public async Task<TransactionModel> GetReceiptDataAsync(string orderId)
-        {
-            var receiptData = await context.LoadAsync<TransactionCollection>(orderId);
-            var receipt = mapper.Map<TransactionModel>(receiptData);
-            return receipt;
-        }
     }
 }
     
