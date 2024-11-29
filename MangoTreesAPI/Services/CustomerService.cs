@@ -238,12 +238,20 @@ namespace MangoTreesAPI.Services
             foreach (var id in userData.OrderHistory)
             {
                 var orderData = await GetOrderAsync(id);
-                var order = mapper.Map<OrderResponseModel>(orderData);
-                if(order != null && order.OrderStatus != OrderStatusEnum.PaymentFailed)
+                if(orderData == null)
                 {
-                    var orderItems = await GetOrderItemDataListAsync(orderData.OrderItems);
-                    order.OrderItems = orderItems;
-                    ordersListData.Add(order);
+                    continue;
+                }
+                else
+                {
+                    var order = mapper.Map<OrderResponseModel>(orderData);
+                    order.OrderId = id;
+                    if (order != null && order.OrderStatus != OrderStatusEnum.PaymentFailed)
+                    {
+                        var orderItems = await GetOrderItemDataListAsync(orderData.OrderItems);
+                        order.OrderItems = orderItems;
+                        ordersListData.Add(order);
+                    }
                 }
             }
             return ordersListData.ToArray();

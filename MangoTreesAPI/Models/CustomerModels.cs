@@ -37,6 +37,7 @@
 
     public class OrderResponseModel
     {
+        public string? OrderId { get; set; }
         public required DateTime OrderDate { get; set; }
         public required string ShippingAddress { get; set; }
         public required OrderItemModel[] OrderItems { get; set; } = [];
