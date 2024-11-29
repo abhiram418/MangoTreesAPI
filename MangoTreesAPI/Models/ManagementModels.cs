@@ -16,5 +16,6 @@
         public required DateTime TransactionDate { get; set; }
         public required string PaymentMethod { get; set; }
         public required OrderStatusEnum Status { get; set; }
+        public required decimal Amount { get; set; }
     }
 }

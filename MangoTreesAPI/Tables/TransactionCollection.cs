@@ -18,5 +18,7 @@ namespace MangoTreesAPI.Tables
         public required string PaymentMethod { get; set; }
         [DynamoDBProperty("Status")]
         public required OrderStatusEnum Status { get; set; }
+        [DynamoDBProperty("Amount")]
+        public required decimal Amount { get; set; }
     }
 }

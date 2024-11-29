@@ -82,6 +82,12 @@ namespace MangoTreesAPI.Services
             product.ProductId = productId;
             await context.SaveAsync(product);
         }
+        private async Task UpdateProductToOutOfStockDataAsync(string productId)
+        {
+            var productData = await GetProductDataAsync(productId);
+            productData.Availability = false;
+            await UpdateProductDataAsync(productData, productId);
+        }
         public async Task<List<ProductModel>> GetProductListDataAsync(string[] productIds)
         {
             var productListData = new List<ProductModel>();
@@ -121,6 +127,22 @@ namespace MangoTreesAPI.Services
             var inventory = mapper.Map<InventoryCollection>(inventoryData);
             await context.SaveAsync(inventory);
             return inventory.InventoryId;
+        }
+        public async Task UpdateInventoryDataAsync(string productId, int quantity)
+        {
+            var productData = await GetProductDataAsync(productId);
+            var inventoryId = productData.InventoryId;
+            var inventoryData = await context.LoadAsync<InventoryCollection>(inventoryId);
+            if (inventoryData.StockQuantity > quantity)
+            {
+                inventoryData.StockQuantity = inventoryData.StockQuantity - quantity;
+            }
+            else
+            {
+                inventoryData.StockQuantity = 0;
+                await UpdateProductToOutOfStockDataAsync(productId);
+            }
+            await context.SaveAsync(inventoryData);
         }
         public async Task<InventoryModel> GetInventoryDataAsync(string inventoryId)
         {

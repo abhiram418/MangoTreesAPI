@@ -200,6 +200,8 @@ namespace MangoTreesAPI.Services
             orderData.DeliveryMethod = await PostDeliveryMethodAsync(orderRequestData.DeliveryMethod);
             orderData.OrderItems = await PostOrderItemListAsync(orderRequestData.OrderItems);
             var order = mapper.Map<OrderCollection>(orderData);
+
+            decimal discountedAmount = order.DiscountedAmount ?? 0.00m;
             var transactionData = new TransactionModel()
             {
                 OrderId = order.OrderId,
@@ -207,6 +209,7 @@ namespace MangoTreesAPI.Services
                 TransactionDate = order.OrderDate,
                 PaymentMethod = order.PaymentMethod,
                 Status = OrderStatusEnum.Pending,
+                Amount = order.TotalAmount - discountedAmount
             };
 
             var user = await GetUserDataAsync(userId);
@@ -309,6 +312,7 @@ namespace MangoTreesAPI.Services
         {
             var orderItem = mapper.Map<OrderItemCollection>(orderItemData);
             await context.SaveAsync(orderItem);
+            await productService.UpdateInventoryDataAsync(orderItemData.ProductId, orderItemData.Quantity);
             return orderItem.OrderItemId;
         }
     }
