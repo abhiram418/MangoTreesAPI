@@ -1,5 +1,10 @@
 ﻿namespace MangoTreesAPI.Models
 {
+    public class AwsDataOptions
+    {
+        public required string BucketName { get; set; }
+        public required string Region { get; set; }
+    }
     public class PromotionModel
     {
         public required string Code { get; set; }
@@ -11,8 +16,9 @@
     }
     public class TransactionModel
     {
-        public required string OrderId { get; set; }
+        public string? TransactionId { get; set; }
         public required string UserId { get; set; }
+        public required string OrderId { get; set; }
         public required DateTime TransactionDate { get; set; }
         public required string PaymentMethod { get; set; }
         public required OrderStatusEnum Status { get; set; }

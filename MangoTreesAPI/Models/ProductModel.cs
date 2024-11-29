@@ -1,10 +1,5 @@
 ﻿namespace MangoTreesAPI.Models
 {
-    public class AwsDataOptions
-    {
-        public required string BucketName { get; set; }
-        public required string Region { get; set; }
-    }
     public class InventoryRequestModel
     {
         public DateTime? ExpirationDate { get; set; }
