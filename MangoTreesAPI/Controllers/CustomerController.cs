@@ -226,7 +226,7 @@ namespace MangoTreesAPI.Controllers
                 }
                 else
                 {
-                    return NoContent();
+                    return StatusCode(410, new { Message = ResponseMessages.Response.Failure });
                 }
             }
             catch (Exception)
