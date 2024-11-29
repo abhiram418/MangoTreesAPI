@@ -35,6 +35,23 @@
         public string? PromotionApplied { get; set; }
     }
 
+    public class OrderResponseModel
+    {
+        public required DateTime OrderDate { get; set; }
+        public required string ShippingAddress { get; set; }
+        public required OrderItemModel[] OrderItems { get; set; } = [];
+        public required decimal TotalAmount { get; set; }
+        public required string PaymentMethod { get; set; }
+        public required OrderStatusEnum OrderStatus { get; set; } = OrderStatusEnum.AwaitingPayment;
+        public required string DeliveryMethod { get; set; }
+        public string? TrackingNumber { get; set; }
+        public string? Notes { get; set; }
+        public bool? IsGift { get; set; }
+        public string? GiftMessage { get; set; }
+        public decimal? DiscountedAmount { get; set; }
+        public string? PromotionApplied { get; set; }
+    }
+
     public class OrderModel
     {
         public required DateTime OrderDate { get; set; }

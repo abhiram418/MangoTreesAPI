@@ -4,9 +4,9 @@
     {
         AwaitingPayment,
         Paid,
+        PaymentFailed,
         Pending,
         Shipped,
-        Delivered,
-        PaymentFailed
+        Delivered
     }
 }

@@ -227,19 +227,22 @@ namespace MangoTreesAPI.Services
             order.OrderId = orderId;
             await context.SaveAsync(order);
         }
-        public async Task<OrderModel[]> GetOrdersListAsync(string userId)
+        public async Task<OrderResponseModel[]> GetOrdersListAsync(string userId)
         {
             var userData = await GetUserDataAsync(userId);
             if(userData.OrderHistory.Count == 0)
             {
                 return [];
             }
-            var ordersListData = new List<OrderModel>();
+            var ordersListData = new List<OrderResponseModel>();
             foreach (var id in userData.OrderHistory)
             {
-                var order = await GetOrderAsync(id);
-                if(order != null && order.OrderStatus != OrderStatusEnum.AwaitingPayment && order.OrderStatus != OrderStatusEnum.PaymentFailed)
+                var orderData = await GetOrderAsync(id);
+                var order = mapper.Map<OrderResponseModel>(orderData);
+                if(order != null && order.OrderStatus != OrderStatusEnum.PaymentFailed)
                 {
+                    var orderItems = await GetOrderItemDataListAsync(orderData.OrderItems);
+                    order.OrderItems = orderItems;
                     ordersListData.Add(order);
                 }
             }
@@ -259,6 +262,28 @@ namespace MangoTreesAPI.Services
             return deliveryMethod.DeliveryMethodId;
         }
 
+        private async Task<OrderItemModel[]> GetOrderItemDataListAsync(string[] orderItemIdList)
+        {
+            var orderItemsListData = new List<OrderItemModel>();
+            foreach (var id in orderItemIdList)
+            {
+                if(id == null)
+                {
+                    continue;
+                }
+
+                var orderItem = await GetOrderItemDataAsync(id);
+                orderItemsListData.Add(orderItem);
+            }
+
+            return orderItemsListData.ToArray();
+        }
+        private async Task<OrderItemModel> GetOrderItemDataAsync(string orderItemId)
+        {
+            var orderItemData = await context.LoadAsync<OrderItemCollection>(orderItemId);
+            var orderItem = mapper.Map<OrderItemModel>(orderItemData);
+            return orderItem;
+        }
         private async Task<string[]> PostOrderItemListAsync(OrderItemModel[] orderItemsData)
         {
             var orderItemsIdList = new List<string>();

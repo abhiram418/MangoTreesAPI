@@ -33,6 +33,12 @@ namespace MangoTreesAPI.DataAutoMapper
             CreateMap<OrderRequestModel, OrderModel>();
             CreateMap<OrderModel, OrderRequestModel>();
 
+            CreateMap<OrderResponseModel, OrderModel>()
+            .ForMember(dest => dest.OrderItems, opt => opt.Ignore());
+            CreateMap<OrderModel, OrderResponseModel>()
+            .ForMember(dest => dest.OrderItems, opt => opt.Ignore());
+
+
             CreateMap<OrderModel, OrderCollection>();
             CreateMap<OrderCollection, OrderModel>();
 
