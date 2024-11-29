@@ -208,7 +208,7 @@ namespace MangoTreesAPI.Services
                 UserId = userId,
                 TransactionDate = order.OrderDate,
                 PaymentMethod = order.PaymentMethod,
-                Status = OrderStatusEnum.Pending,
+                Status = OrderStatusEnum.AwaitingPayment,
                 Amount = order.TotalAmount - discountedAmount
             };
 
