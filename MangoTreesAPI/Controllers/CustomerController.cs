@@ -206,5 +206,24 @@ namespace MangoTreesAPI.Controllers
                 return NotFound(new { Message = ResponseMessages.Response.ResourceNotFound });
             }
         }
+
+        [HttpGet("Order/Receipt")]
+        public async Task<ActionResult> GetReceiptData(string orderId)
+        {
+            if (string.IsNullOrEmpty(orderId))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var Transaction = await productService.GetReceiptDataAsync(orderId);
+                return Ok(Transaction);
+            }
+            catch (Exception)
+            {
+                return NotFound(new { Message = ResponseMessages.Response.ResourceNotFound });
+            }
+        }
     }
 }
