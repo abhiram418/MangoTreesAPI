@@ -253,6 +253,15 @@ namespace MangoTreesAPI.Services
                     {
                         var orderItems = await GetOrderItemDataListAsync(orderData.OrderItems);
                         order.OrderItems = orderItems;
+                        var orderAddress = await GetAddressAsync(orderData.ShippingAddress);
+                        if (orderAddress != null)
+                        {
+                            order.ShippingAddress = orderAddress.AddressTitle;
+                        }
+                        else
+                        {
+                            order.ShippingAddress = "";
+                        }
                         ordersListData.Add(order);
                     }
                 }
