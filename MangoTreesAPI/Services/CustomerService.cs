@@ -147,7 +147,14 @@ namespace MangoTreesAPI.Services
             }
             var cart = mapper.Map<CartCollection>(cartData);
             cart.CartId = cartId;
-            cart.Items = items.ToArray();
+            if(items.Count > 0)
+            {
+                cart.Items = items.ToArray();
+            }
+            else
+            {
+                cart.Items = null;
+            }
             await context.SaveAsync(cart);
             return items.ToArray();
         }
