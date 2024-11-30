@@ -95,7 +95,7 @@ namespace MangoTreesAPI.Controllers
             try
             {
                 var CartItems = await customerService.AddToCartAsync(cartId, items);
-                return Ok(new { CartItems = CartItems });
+                return Ok(CartItems);
             }
             catch (Exception)
             {

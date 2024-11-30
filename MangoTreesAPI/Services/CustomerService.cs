@@ -132,13 +132,13 @@ namespace MangoTreesAPI.Services
                 var inventoryData = await productService.GetInventoryDataAsync(productData.InventoryId);
                 if (productData != null && productData.Availability)
                 {
-                    if(inventoryData?.ExpirationDate == null)
+                    if(inventoryData?.ExpirationDate == null && inventoryData?.StockQuantity != 0)
                     {
                         items.Add(productId);
                     }
                     else
                     {
-                        if(inventoryData?.ExpirationDate > DateTime.Now)
+                        if(inventoryData?.ExpirationDate > DateTime.Now && inventoryData.StockQuantity != 0)
                         {
                             items.Add(productId);
                         }

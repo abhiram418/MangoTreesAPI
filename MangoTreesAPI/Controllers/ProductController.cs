@@ -107,16 +107,16 @@ namespace MangoTreesAPI.Controllers
             }
         }
 
-        [HttpGet("Inventory")]
-        public async Task<ActionResult> GetProductInventoryData(string productId)
+        [HttpPost("Inventory")]
+        public async Task<ActionResult> GetProductInventoryData([FromBody] string[] inventoryIdList)
         {
-            if (string.IsNullOrEmpty(productId))
+            if (inventoryIdList == null)
             {
                 return BadRequest();
             }
             try
             {
-                var inventoryData = await productService.GetInventoryDataAsync(productId);
+                var inventoryData = await productService.GetInventoryListDataAsync(inventoryIdList);
                 return Ok(inventoryData);
             }
             catch (Exception)

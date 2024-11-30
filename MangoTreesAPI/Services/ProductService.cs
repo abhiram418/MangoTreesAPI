@@ -150,6 +150,16 @@ namespace MangoTreesAPI.Services
             var inventory = mapper.Map<InventoryModel>(inventoryData);
             return inventory;
         }
+        public async Task<InventoryModel[]> GetInventoryListDataAsync(string[] inventoryIdList)
+        {
+            var InventoryList = new List<InventoryModel>();
+            foreach (var inventoryId in inventoryIdList)
+            {
+                var inventory = await GetInventoryDataAsync(inventoryId);
+                InventoryList.Add(inventory);
+            }
+            return InventoryList.ToArray();
+        }
 
         public async Task<int> ValidatePromotionCodeAsync(string promotionCode, decimal amount)
         {
