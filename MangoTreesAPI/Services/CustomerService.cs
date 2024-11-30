@@ -52,6 +52,14 @@ namespace MangoTreesAPI.Services
             var user = mapper.Map<UsersModels>(userData);
             return user;
         }
+        public async Task<UsersResponseModels> GetBasicUserDataAsync(string userId)
+        {
+            var userData = await context.LoadAsync<UsersCollection>(userId);
+            var userModel = mapper.Map<UsersModels>(userData);
+            var user = mapper.Map<UsersResponseModels>(userModel);
+            user.AddressList = await GetAddressListAsync(userId);
+            return user;
+        }
         private async Task UpdateUserDataAsync(UsersModels userData, string userId)
         {
             var user = mapper.Map<UsersCollection>(userData);

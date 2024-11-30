@@ -25,12 +25,12 @@ namespace MangoTreesAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<UsersModels>> GetUserDetails()
+        public async Task<ActionResult<UsersResponseModels>> GetUserDetails()
         {
             var userId = httpContext.HttpContext?.User.FindFirst("userId")?.Value ?? throw new UnauthorizedAccessException("User ID not found in token");
             try
             {
-                var user = await customerService.GetUserDataAsync(userId);
+                var user = await customerService.GetBasicUserDataAsync(userId);
                 if (user != null)
                 {
                     return user;

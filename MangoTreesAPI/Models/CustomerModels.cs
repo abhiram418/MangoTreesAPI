@@ -121,6 +121,17 @@
         public required bool Conditions { get; set; }
         public required AddressModel Address { get; set; }
     }
+    public class UsersResponseModels
+    {
+        public required string FirstName { get; set; }
+        public required string LastName { get; set; }
+        public required string Gender { get; set; }
+        public required DateTime DateOfBirth { get; set; }
+        public required string PhoneNumber { get; set; }
+        public string? Email { get; set; }
+        public required string Occupation { get; set; }
+        public required AddressResponseModel[] AddressList { get; set; } = [];
+    }
     public class UsersModels
     {
         public required string FirstName { get; set; }

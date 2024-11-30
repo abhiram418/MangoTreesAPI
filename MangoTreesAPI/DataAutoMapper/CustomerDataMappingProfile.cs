@@ -15,6 +15,11 @@ namespace MangoTreesAPI.DataAutoMapper
             CreateMap<UsersCollection, UsersModels>();
             CreateMap<UsersModels, UsersCollection>();
 
+            CreateMap<UsersResponseModels, UsersModels>()
+            .ForMember(dest => dest.AddressList, opt => opt.Ignore());
+            CreateMap<UsersModels, UsersResponseModels>()
+            .ForMember(dest => dest.AddressList, opt => opt.Ignore());
+
             CreateMap<CartModel, CartCollection>();
             CreateMap<CartCollection, CartModel>();
 
