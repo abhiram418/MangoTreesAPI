@@ -131,6 +131,7 @@
         public string? Email { get; set; }
         public required string Occupation { get; set; }
         public required AddressResponseModel[] AddressList { get; set; } = [];
+        public required string Cart { get; set; } = string.Empty;
     }
     public class UsersModels
     {
