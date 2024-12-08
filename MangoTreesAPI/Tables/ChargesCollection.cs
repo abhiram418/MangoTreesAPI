@@ -5,8 +5,10 @@ namespace MangoTreesAPI.Tables
     [DynamoDBTable("ChargesCollection")]
     public class ChargesCollection
     {
-        [DynamoDBHashKey("ChargesId")]
-        public string? ChargesId { get; set; }
+        [DynamoDBHashKey("Pincode")]
+        public required int Pincode { get; set; }
+        [DynamoDBProperty("ChargesId")]
+        public required string ChargesId { get; set; } = Guid.NewGuid().ToString();
         [DynamoDBProperty("Premium")]
         public required decimal Premium { get; set; }
         [DynamoDBProperty("PocketFriendly")]

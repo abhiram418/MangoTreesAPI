@@ -1,6 +1,4 @@
-﻿using Amazon.DynamoDBv2.DataModel;
-
-namespace MangoTreesAPI.Models
+﻿namespace MangoTreesAPI.Models
 {
     public class InventoryRequestModel
     {

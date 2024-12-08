@@ -198,9 +198,9 @@ namespace MangoTreesAPI.Services
             await context.SaveAsync(promotion);
         }
 
-        public async Task<ChargesModel> GetDeliveryAndPackagingCostDataAsync(string ChargesId)
+        public async Task<ChargesModel> GetDeliveryAndPackagingCostDataAsync(int pincode)
         {
-            var ChargesData = await context.LoadAsync<ChargesCollection>(ChargesId);
+            var ChargesData = await context.LoadAsync<ChargesCollection>(pincode);
             var charges = mapper.Map<ChargesModel>(ChargesData);
             return charges;
         }

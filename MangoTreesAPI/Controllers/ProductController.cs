@@ -126,15 +126,15 @@ namespace MangoTreesAPI.Controllers
         }
 
         [HttpGet("Charges")]
-        public async Task<ActionResult> GetDeliveryAndPackagingCostData(string ChargesId)
+        public async Task<ActionResult> GetDeliveryAndPackagingCostData(int Pincode)
         {
-            if (string.IsNullOrEmpty(ChargesId))
+            if (Pincode <= 0 || Pincode.ToString().Length != 6)
             {
                 return BadRequest();
             }
             try
             {
-                var productData = await productService.GetDeliveryAndPackagingCostDataAsync(ChargesId);
+                var productData = await productService.GetDeliveryAndPackagingCostDataAsync(Pincode);
                 return Ok(productData);
             }
             catch (Exception)
