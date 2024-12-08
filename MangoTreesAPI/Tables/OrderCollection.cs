@@ -22,6 +22,8 @@ namespace MangoTreesAPI.Tables
         public required string PaymentMethod { get; set; }
         [DynamoDBProperty("OrderStatus")]
         public required OrderStatusEnum OrderStatus { get; set; }
+        [DynamoDBProperty("PackagingMethod")]
+        public required string PackagingMethod { get; set; }
         [DynamoDBProperty("DeliveryMethod")]
         public required string DeliveryMethod { get; set; }
         [DynamoDBProperty("TrackingNumber")]

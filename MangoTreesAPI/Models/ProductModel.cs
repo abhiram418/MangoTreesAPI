@@ -1,9 +1,20 @@
-﻿namespace MangoTreesAPI.Models
+﻿using Amazon.DynamoDBv2.DataModel;
+
+namespace MangoTreesAPI.Models
 {
     public class InventoryRequestModel
     {
         public DateTime? ExpirationDate { get; set; }
         public required int StockQuantity { get; set; }
+    }
+    public class ChargesModel
+    {
+        public required decimal Premium { get; set; }
+        public required decimal PocketFriendly { get; set; }
+        public required decimal Basic { get; set; }
+        public required decimal Dedicated { get; set; }
+        public required decimal ThirdParty { get; set; }
+        public required decimal APSRTC { get; set; }
     }
     public class InventoryModel
     {
@@ -19,6 +30,15 @@
         public required string Title { get; set; }
         public required string Date { get; set; }
         public required string Review { get; set; }
+    }
+    public class ProductInfoResponceModel
+    {
+        public string ProductId { get; set; } = string.Empty;
+        public required int NumberOfMangoes { get; set; }
+        public required int Weight { get; set; }
+        public required string Variety { get; set; }
+        public required string RipenessLevel { get; set; }
+        public required string StorageInstructions { get; set; }
     }
     public class ProductInfoModel
     {

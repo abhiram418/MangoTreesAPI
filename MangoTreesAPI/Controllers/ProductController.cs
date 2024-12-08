@@ -85,6 +85,24 @@ namespace MangoTreesAPI.Controllers
             }
         }
 
+        [HttpPost("ProductInfoList")]
+        public async Task<ActionResult> GetProductInfoListData([FromBody] string[] productIds)
+        {
+            if (productIds.Length < 1)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var data = await productService.GetProductInfoListDataAsync(productIds);
+                return Ok(data);
+            }
+            catch (Exception)
+            {
+                return NotFound(new { Message = ResponseMessages.Response.ResourceNotFound });
+            }
+        }
+
         [HttpGet("Data")]
         public async Task<ActionResult> GetProductData(string productInfoId)
         {
@@ -99,6 +117,24 @@ namespace MangoTreesAPI.Controllers
                 {
                     productData.Availability = false;
                 }
+                return Ok(productData);
+            }
+            catch (Exception)
+            {
+                return NotFound(new { Message = ResponseMessages.Response.ResourceNotFound });
+            }
+        }
+
+        [HttpGet("Charges")]
+        public async Task<ActionResult> GetDeliveryAndPackagingCostData(string ChargesId)
+        {
+            if (string.IsNullOrEmpty(ChargesId))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var productData = await productService.GetDeliveryAndPackagingCostDataAsync(ChargesId);
                 return Ok(productData);
             }
             catch (Exception)

@@ -17,6 +17,9 @@ namespace MangoTreesAPI.DataAutoMapper
             CreateMap<ProductInfoModel, ProductInfoCollection>();
             CreateMap<ProductInfoCollection, ProductInfoModel>();
 
+            CreateMap<ProductInfoModel, ProductInfoResponceModel>();
+            CreateMap<ProductInfoResponceModel, ProductInfoModel>();
+
             CreateMap<ProductReviewsModel, ProductReviewsCollection>();
             CreateMap<ProductReviewsCollection, ProductReviewsModel>();
 
@@ -25,6 +28,9 @@ namespace MangoTreesAPI.DataAutoMapper
 
             CreateMap<InventoryModel, InventoryCollection>();
             CreateMap<InventoryCollection, InventoryModel>();
+
+            CreateMap<ChargesModel, ChargesCollection>();
+            CreateMap<ChargesCollection, ChargesModel>();
         }
     }
 }

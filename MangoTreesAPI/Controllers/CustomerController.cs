@@ -67,7 +67,7 @@ namespace MangoTreesAPI.Controllers
         }
 
         [HttpGet("Cart")]
-        public async Task<ActionResult<ProductModel[]>> GetCartData(string cartId)
+        public async Task<ActionResult> GetCartData(string cartId)
         {
             if (string.IsNullOrEmpty(cartId))
             {
@@ -173,7 +173,7 @@ namespace MangoTreesAPI.Controllers
         }
 
         [HttpGet("Orders")]
-        public async Task<ActionResult<OrderModel[]>> GetUserOrdersData()
+        public async Task<ActionResult> GetUserOrdersData()
         {
             var userId = httpContext.HttpContext?.User.FindFirst("userId")?.Value ?? throw new UnauthorizedAccessException("User ID not found in token");
 
@@ -189,7 +189,7 @@ namespace MangoTreesAPI.Controllers
         }
 
         [HttpPost("Order")]
-        public async Task<ActionResult<bool>> AddUserOrderData([FromBody] OrderRequestModel orderData)
+        public async Task<ActionResult> AddUserOrderData([FromBody] OrderRequestModel orderData)
         {
             var userId = httpContext.HttpContext?.User.FindFirst("userId")?.Value ?? throw new UnauthorizedAccessException("User ID not found in token");
 

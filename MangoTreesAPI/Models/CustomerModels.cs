@@ -26,6 +26,7 @@
         public required OrderItemModel[] OrderItems { get; set; }
         public required decimal TotalAmount { get; set; }
         public required string PaymentMethod { get; set; }
+        public required string PackagingMethod { get; set; }
         public required DeliveryMethodModel DeliveryMethod { get; set; }
         public string? TrackingNumber { get; set; }
         public string? Notes { get; set; }
@@ -44,6 +45,7 @@
         public required decimal TotalAmount { get; set; }
         public required string PaymentMethod { get; set; }
         public required OrderStatusEnum OrderStatus { get; set; } = OrderStatusEnum.AwaitingPayment;
+        public required string PackagingMethod { get; set; }
         public required string DeliveryMethod { get; set; }
         public string? TrackingNumber { get; set; }
         public string? Notes { get; set; }
@@ -60,6 +62,7 @@
         public required string[] OrderItems { get; set; }
         public required decimal TotalAmount { get; set; }
         public required string PaymentMethod { get; set; }
+        public required string PackagingMethod { get; set; }
         public required OrderStatusEnum OrderStatus { get; set; } = OrderStatusEnum.AwaitingPayment;
         public required string DeliveryMethod { get; set; }
         public string? TrackingNumber { get; set; }

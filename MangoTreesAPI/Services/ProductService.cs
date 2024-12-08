@@ -59,6 +59,19 @@ namespace MangoTreesAPI.Services
             var productInfo = mapper.Map<ProductInfoModel>(productInfoData);
             return productInfo;
         }
+        public async Task<ProductInfoResponceModel[]> GetProductInfoListDataAsync(string[] productIdsList)
+        {
+            var productInfoListData = new List<ProductInfoResponceModel>();
+            foreach (var id in productIdsList)
+            {
+                var productData = await GetProductDataAsync(id);
+                var productInfoData = await GetProductInfoDataAsync(productData.ProductInfo);
+                var productInfo = mapper.Map<ProductInfoResponceModel>(productInfoData);
+                productInfo.ProductId = productData.ProductId!;
+                productInfoListData.Add(productInfo);
+            }
+            return productInfoListData.ToArray();
+        }
 
         private async Task<string[]> GetNutritionFactsAsync(string productId)
         {
@@ -183,6 +196,13 @@ namespace MangoTreesAPI.Services
         {
             var promotion = mapper.Map<PromotionCollection>(promotionData);
             await context.SaveAsync(promotion);
+        }
+
+        public async Task<ChargesModel> GetDeliveryAndPackagingCostDataAsync(string ChargesId)
+        {
+            var ChargesData = await context.LoadAsync<ChargesCollection>(ChargesId);
+            var charges = mapper.Map<ChargesModel>(ChargesData);
+            return charges;
         }
     }
 }
