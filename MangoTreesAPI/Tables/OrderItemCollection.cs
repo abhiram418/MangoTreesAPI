@@ -13,6 +13,8 @@ namespace MangoTreesAPI.Tables
         public required string ProductTitle { get; set; }
         [DynamoDBProperty("ProductDesc")]
         public required string ProductDesc { get; set; }
+        [DynamoDBProperty("Image")]
+        public required string Image { get; set; }
         [DynamoDBProperty("Quantity")]
         public required int Quantity { get; set; }
         [DynamoDBProperty("Price")]

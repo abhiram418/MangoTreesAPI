@@ -15,6 +15,7 @@
         public required string ProductId { get; set; }
         public required string ProductTitle { get; set; }
         public required string ProductDesc { get; set; }
+        public required string Image {  get; set; }
         public required int Quantity { get; set; }
         public required decimal Price { get; set; }
         public required decimal TotalPrice { get; set; }

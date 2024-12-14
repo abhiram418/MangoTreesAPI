@@ -12,10 +12,12 @@ namespace MangoTreesAPI.Controllers
     {
         private readonly AuthService authService;
         private readonly ProductService productService;
-        public ManagementController(ProductService _productService, AuthService _authService)
+        private readonly ManagementService managementService;
+        public ManagementController(ManagementService _managementService, ProductService _productService, AuthService _authService)
         {
             authService = _authService;
             productService = _productService;
+            managementService = _managementService;
         }
 
         [HttpPost("Product")]
@@ -60,6 +62,41 @@ namespace MangoTreesAPI.Controllers
             {
                 await productService.PostPromotionCodeAsync(promotionData);
                 return Ok(new { Message = PromotionCodeResponse.SuccessProperty2 });
+            }
+            catch (Exception)
+            {
+                return NotFound(new { Message = ResponseMessages.Response.ResourceNotFound });
+            }
+        }
+
+        [HttpPost("Information")]
+        public async Task<IActionResult> PostInformationData(InformationModel informationData)
+        {
+            try
+            {
+                var InformationID = await managementService.PostInformationDataAsync(informationData);
+                return Ok(InformationID);
+            }
+            catch (Exception)
+            {
+                return NotFound(new { Message = ResponseMessages.Response.ResourceNotFound });
+            }
+        }
+
+        [HttpGet("Information")]
+        public async Task<IActionResult> GetInformationData(string informationID)
+        {
+            try
+            {
+                var Information = await managementService.GetInformationDataAsync(informationID);
+                if(Information !=  null)
+                {
+                    return Ok(Information);
+                }
+                else
+                {
+                    return NotFound(new { Message = ResponseMessages.Response.ResourceNotFound });
+                }
             }
             catch (Exception)
             {

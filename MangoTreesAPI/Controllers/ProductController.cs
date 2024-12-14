@@ -135,7 +135,14 @@ namespace MangoTreesAPI.Controllers
             try
             {
                 var productData = await productService.GetDeliveryAndPackagingCostDataAsync(Pincode);
-                return Ok(productData);
+                if (productData != null)
+                {
+                    return Ok(productData);
+                }
+                else
+                {
+                    return NotFound(new { Message = ResponseMessages.Response.ResourceNotFound });
+                }
             }
             catch (Exception)
             {

@@ -283,7 +283,7 @@ namespace MangoTreesAPI.Services
             }
             return ordersListData.ToArray();
         }
-        private async Task<OrderModel> GetOrderAsync(string orderId)
+        public async Task<OrderModel> GetOrderAsync(string orderId)
         {
             var orderData = await context.LoadAsync<OrderCollection>(orderId);
             var order = mapper.Map<OrderModel>(orderData);

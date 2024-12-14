@@ -13,6 +13,9 @@ namespace MangoTreesAPI.DataAutoMapper
 
             CreateMap<TransactionModel, TransactionCollection>();
             CreateMap<TransactionCollection, TransactionModel>();
+
+            CreateMap<InformationModel, InformationCollection>();
+            CreateMap<InformationCollection, InformationModel>();
         }
     }
 }

@@ -37,5 +37,18 @@ namespace MangoTreesAPI.Services
             var transaction = mapper.Map<TransactionModel>(transactionData);
             return transaction;
         }
+
+        public async Task<string> PostInformationDataAsync(InformationModel informationData)
+        {
+            var Information = mapper.Map<InformationCollection>(informationData);
+            await context.SaveAsync(Information);
+            return Information.InformationId;
+        }
+        public async Task<InformationModel> GetInformationDataAsync(string informationID)
+        {
+            var InformationData = await context.LoadAsync<InformationCollection>(informationID);
+            var information = mapper.Map<InformationModel>(InformationData);
+            return information;
+        }
     }
 }

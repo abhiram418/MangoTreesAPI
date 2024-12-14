@@ -2,6 +2,7 @@
 using MangoTreesAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Transactions;
 
 namespace MangoTreesAPI.Controllers
 {
@@ -222,6 +223,8 @@ namespace MangoTreesAPI.Controllers
                 var Transaction = await managementService.GetTransactionDataAsync(orderId);
                 if(Transaction != null)
                 {
+                    var orderData = await customerService.GetOrderAsync(orderId);
+                    Transaction.TrackingNumber = orderData?.TrackingNumber;
                     return Ok(Transaction);
                 }
                 else

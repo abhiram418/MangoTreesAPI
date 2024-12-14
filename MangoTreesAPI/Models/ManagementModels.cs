@@ -1,4 +1,6 @@
-﻿namespace MangoTreesAPI.Models
+﻿using MangoTreesAPI.Tables;
+
+namespace MangoTreesAPI.Models
 {
     public class AwsDataOptions
     {
@@ -20,8 +22,22 @@
         public required string UserId { get; set; }
         public required string OrderId { get; set; }
         public required DateTime TransactionDate { get; set; }
+        public string? TrackingNumber { get; set; }
         public required string PaymentMethod { get; set; }
         public required OrderStatusEnum Status { get; set; }
         public required decimal Amount { get; set; }
+    }
+
+    public class InformationModel
+    {
+        public DateTime InformationCreatedDate { get; set; }
+        public string InformationTitle { get; set; } = string.Empty;
+        public InformationDetail[] Details { get; set; } = [];
+    }
+
+    public class InformationDetailModel
+    {
+        public required string Title { get; set; } = string.Empty;
+        public required string Description { get; set; } = string.Empty;
     }
 }
