@@ -12,9 +12,11 @@ namespace MangoTreesAPI.Controllers
     {
         private readonly ProductService productService;
         private readonly IHttpContextAccessor httpContext;
-        public ProductController(ProductService _productService, IHttpContextAccessor _httpContext)
+        private readonly CustomerService customerService;
+        public ProductController(ProductService _productService, CustomerService _customerService, IHttpContextAccessor _httpContext)
         {
             productService = _productService;
+            customerService = _customerService;
             httpContext = _httpContext;
         }
 
@@ -34,16 +36,28 @@ namespace MangoTreesAPI.Controllers
 
         [HttpPost("Review")]
         [Authorize(Roles = "customer,management,admin")]
-        public async Task<ActionResult> PostReviewData([FromBody] ProductReviewsModel reviewData, string productId)
+        public async Task<ActionResult> PostReviewData([FromBody] ProductReviewsModel reviewData, string productId, string orderItemId)
         {
-            if (!ModelState.IsValid)
+            var userId = httpContext.HttpContext?.User.FindFirst("userId")?.Value ?? throw new UnauthorizedAccessException("User ID not found in token");
+
+            if (!ModelState.IsValid || string.IsNullOrEmpty(productId) || string.IsNullOrEmpty(orderItemId) || string.IsNullOrEmpty(userId))
             {
                 return BadRequest();
             }
             try
             {
-                await productService.PostProductReviewAsync(reviewData, productId);
-                return Ok(new { Message = ResponseMessages.Response.Success.ToString() });
+                var Reviewer = await customerService.GetUserDataAsync(userId);
+                reviewData.ReviewerName = Reviewer.FirstName;
+                var productData = await productService.PostProductReviewAsync(reviewData, productId);
+                if(productData != null)
+                {
+                    await customerService.UpdateOrderItemAsync(orderItemId, productId, true);
+                    return Ok(new { Message = ResponseMessages.Response.Success.ToString() });
+                }
+                else
+                {
+                    return NotFound(new { Message = ResponseMessages.Response.ResourceNotFound });
+                }
             }
             catch (Exception)
             {

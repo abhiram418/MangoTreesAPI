@@ -23,8 +23,8 @@
     }
     public class ProductReviewsModel
     {
-        public required string ReviewerName { get; set; }
-        public required string Rating { get; set; }
+        public string? ReviewerName { get; set; }
+        public required int Rating { get; set; }
         public required string Title { get; set; }
         public required string Date { get; set; }
         public required string Review { get; set; }

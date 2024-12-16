@@ -21,5 +21,7 @@ namespace MangoTreesAPI.Tables
         public required decimal Price { get; set; }
         [DynamoDBProperty("TotalPrice")]
         public required decimal TotalPrice { get; set; }
+        [DynamoDBProperty("IsReviewed")]
+        public required bool IsReviewed { get; set; }
     }
 }

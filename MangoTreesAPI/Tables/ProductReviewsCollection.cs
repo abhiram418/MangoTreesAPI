@@ -10,7 +10,7 @@ namespace MangoTreesAPI.Tables
         [DynamoDBProperty("ReviewerName")]
         public required string ReviewerName { get; set; }
         [DynamoDBProperty("Rating")]
-        public required string Rating { get; set; }
+        public required int Rating { get; set; }
         [DynamoDBProperty("Title")]
         public required string Title { get; set; }
         [DynamoDBProperty("Date")]

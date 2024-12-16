@@ -12,6 +12,7 @@
     }
     public class OrderItemModel
     {
+        public required string OrderItemId { get; set; }
         public required string ProductId { get; set; }
         public required string ProductTitle { get; set; }
         public required string ProductDesc { get; set; }
@@ -19,6 +20,7 @@
         public required int Quantity { get; set; }
         public required decimal Price { get; set; }
         public required decimal TotalPrice { get; set; }
+        public required bool IsReviewed { get; set; } = false;
     }
     public class OrderRequestModel
     {

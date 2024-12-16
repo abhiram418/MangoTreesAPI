@@ -153,7 +153,7 @@ namespace MangoTreesAPI.Services
             }
             else
             {
-                cart.Items = null;
+                cart.Items = null!;
             }
             await context.SaveAsync(cart);
             return items.ToArray();
@@ -338,6 +338,12 @@ namespace MangoTreesAPI.Services
             await context.SaveAsync(orderItem);
             await productService.UpdateInventoryDataAsync(orderItemData.ProductId, orderItemData.Quantity);
             return orderItem.OrderItemId;
+        }
+        public async Task UpdateOrderItemAsync(string orderItemId, string productId, bool IsReviewed)
+        {
+            var orderItemData = await context.LoadAsync<OrderItemCollection>(orderItemId);
+            orderItemData.IsReviewed = IsReviewed;
+            await context.SaveAsync(orderItemData);
         }
     }
 }
